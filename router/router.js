@@ -14,4 +14,5 @@ import {
 import logoUpload from "../config/multerLogoConfig.js";
 router.post("/tblPostMembers", FATSDB.tblPostMembers);
 router.get("/getMembersById/:memberID", FATSDB.getMembersById);
+router.get("/getMembersAll", FATSDB.getMembersAll);
 export default router;
