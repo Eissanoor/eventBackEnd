@@ -12,6 +12,7 @@ import {
   generateToken,
 } from "../helpers/apiAuth.js";
 import logoUpload from "../config/multerLogoConfig.js";
+router.post("/UserLoginAuth", FATSDB.UserLoginAuth);
 router.post("/tblPostMembers", FATSDB.tblPostMembers);
 router.get("/getMembersById/:memberID", FATSDB.getMembersById);
 router.get("/getMembersAll", FATSDB.getMembersAll);

@@ -21,6 +21,67 @@ function generateUpdateQuery(fields, tableName) {
   return `UPDATE ${tableName} SET ${updateFields}`;
 }
 const FATSDB = {
+  async UserLoginAuth(req, res, next) {
+    try {
+      let token;
+      let tokenPayload;
+      const { email, password } = req.body;
+      const pool = await sql.connect(config);
+      const result = await pool
+        .request()
+        .query(
+          `SELECT * FROM users WHERE email='${email}' AND password='${password}'`
+        );
+
+      if (result.recordset.length > 0) {
+        // fetch roles assign to user on the basis of loginname
+
+        let data = await pool
+          .request()
+          .input("email", sql.NVarChar, email)
+          .query(`select * from users where email=@email`);
+
+        if (data.rowsAffected[0] != 0) {
+          let listdata = data.recordsets[0];
+          console.log(listdata);
+          const assignedRoles = listdata.map((item) => item.RoleID);
+          console.log(assignedRoles);
+          tokenPayload = {
+            userloginId: email,
+            assignedRoles: assignedRoles,
+          };
+          console.log(tokenPayload);
+        } else {
+          tokenPayload = {
+            userloginId: users,
+            assignedRoles: [],
+          };
+        }
+        token = jwt.sign(tokenPayload, jwtSecret, { expiresIn: jwtExpiration });
+        console.log(token);
+
+        if (!token)
+          return res
+            .status(500)
+            .send({ success: false, message: "Token not generated" });
+        // return res.cookie("token", token, {
+        //   // httpOnly: true,
+        // }).
+        res
+          .status(200)
+          .send({ success: true, user: result.recordset, token: token });
+      } else {
+        return res
+          .status(400)
+          .send({ success: false, message: "Invalid Credentials" });
+      }
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .send({ success: false, message: "Internal Server Error", error: err });
+    }
+  },
   async tblPostMembers(req, res, next) {
     try {
       let qdate = new Date();
