@@ -16,4 +16,6 @@ router.post("/UserLoginAuth", FATSDB.UserLoginAuth);
 router.post("/tblPostMembers", FATSDB.tblPostMembers);
 router.get("/getMembersById/:memberID", FATSDB.getMembersById);
 router.get("/getMembersAll", FATSDB.getMembersAll);
+router.get("/ListOfDropDownCities", FATSDB.ListOfDropDownCities);
+router.get("/ListOfDropDownProvince", FATSDB.ListOfDropDownProvince);
 export default router;

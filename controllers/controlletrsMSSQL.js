@@ -182,6 +182,30 @@ const FATSDB = {
       return res.status(500).send(e);
     }
   },
+  async ListOfDropDownCities(req, res, next) {
+    try {
+      const memberID = req.params.memberID;
+      let pool = await sql.connect(config);
+      let data = await pool.request().query(`select * from tblCities`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  async ListOfDropDownProvince(req, res, next) {
+    try {
+      const memberID = req.params.memberID;
+      let pool = await sql.connect(config);
+      let data = await pool.request().query(`select * from tbl_province`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //
   ////
 };
