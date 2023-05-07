@@ -186,7 +186,7 @@ const FATSDB = {
     try {
       const memberID = req.params.memberID;
       let pool = await sql.connect(config);
-      let data = await pool.request().query(`select * from tblCities`);
+      let data = await pool.request().query(`select Citiyname from tblCities`);
       console.log(data);
       return res.send(data);
     } catch (e) {
@@ -198,7 +198,9 @@ const FATSDB = {
     try {
       const memberID = req.params.memberID;
       let pool = await sql.connect(config);
-      let data = await pool.request().query(`select * from tbl_province`);
+      let data = await pool
+        .request()
+        .query(`select provincename from tbl_province`);
       console.log(data);
       return res.send(data);
     } catch (e) {
