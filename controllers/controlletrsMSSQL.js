@@ -188,10 +188,10 @@ const FATSDB = {
       let pool = await sql.connect(config);
       let data = await pool.request().query(`select Citiyname from tblCities`);
       console.log(data);
-      return res.send(data);
+      return res.json(data);
     } catch (e) {
       console.log(e);
-      return res.status(500).send(e);
+      return res.status(500).json(e);
     }
   },
   async ListOfDropDownProvince(req, res, next) {
@@ -202,10 +202,10 @@ const FATSDB = {
         .request()
         .query(`select provincename from tbl_province`);
       console.log(data);
-      return res.send(data);
+      return res.json(data);
     } catch (e) {
       console.log(e);
-      return res.status(500).send(e);
+      return res.status(500).json(e);
     }
   },
   //
