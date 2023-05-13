@@ -130,7 +130,7 @@ const FATSDB = {
                         )
                  VALUES
                        (@email
-                        ,password
+                        ,@password
                         ,@first_name
                         ,@last_name
                         ,@street_address
