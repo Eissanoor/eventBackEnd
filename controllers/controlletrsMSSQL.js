@@ -40,7 +40,7 @@ const FATSDB = {
           .request()
           .input("email", sql.NVarChar, email)
           .query(`select * from users where email=@email`);
-
+        //
         if (data.rowsAffected[0] != 0) {
           let listdata = data.recordsets[0];
           console.log(listdata);
