@@ -223,10 +223,10 @@ const FATSDB = {
         .query(
           `SELECT * FROM members WHERE email='${email}' AND password='${password}'`
         );
-      return res.send(result);
+      return res.json(result);
     } catch (e) {
       console.log(e);
-      return res.status(500).send(e);
+      return res.status(500).json(e);
     }
   },
   //
