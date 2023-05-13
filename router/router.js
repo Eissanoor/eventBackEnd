@@ -18,4 +18,8 @@ router.get("/getMembersById/:memberID", FATSDB.getMembersById);
 router.get("/getMembersAll", FATSDB.getMembersAll);
 router.get("/ListOfDropDownCities", FATSDB.ListOfDropDownCities);
 router.get("/ListOfDropDownProvince", FATSDB.ListOfDropDownProvince);
+router.get(
+  "/getMembersEmail_Password/:email/:password",
+  FATSDB.getMembersEmail_Password
+);
 export default router;

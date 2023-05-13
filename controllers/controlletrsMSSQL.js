@@ -214,6 +214,21 @@ const FATSDB = {
       return res.status(500).json(e);
     }
   },
+  async getMembersEmail_Password(req, res, next) {
+    try {
+      const { email, password } = req.params;
+      let pool = await sql.connect(config);
+      const result = await pool
+        .request()
+        .query(
+          `SELECT * FROM members WHERE email='${email}' AND password='${password}'`
+        );
+      return res.send(result);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //
   ////
 };
