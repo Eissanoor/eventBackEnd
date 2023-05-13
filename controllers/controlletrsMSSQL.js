@@ -30,16 +30,16 @@ const FATSDB = {
       const result = await pool
         .request()
         .query(
-          `SELECT * FROM members WHERE email='${email}' AND password='${password}'`
+          `SELECT * FROM users WHERE email='${email}' AND password='${password}'`
         );
-      //
+
       if (result.recordset.length > 0) {
         // fetch roles assign to user on the basis of loginname
 
         let data = await pool
           .request()
           .input("email", sql.NVarChar, email)
-          .query(`select * from members where email=@email`);
+          .query(`select * from users where email=@email`);
 
         if (data.rowsAffected[0] != 0) {
           let listdata = data.recordsets[0];
@@ -65,7 +65,7 @@ const FATSDB = {
             .status(500)
             .send({ success: false, message: "Token not generated" });
         // return res.cookie("token", token, {
-        //   // httpOnly: true,//
+        //   // httpOnly: true,
         // }).
         res
           .status(200)
@@ -85,7 +85,7 @@ const FATSDB = {
   async tblPostMembers(req, res, next) {
     try {
       let qdate = new Date();
-      //
+
       let pool = await sql.connect(config);
 
       let data = await pool
