@@ -90,6 +90,8 @@ const FATSDB = {
 
       let data = await pool
         .request()
+        .input("email", sql.NVarChar, req.body.email)
+        .input("password", sql.NVarChar, req.body.password)
         .input("first_name", sql.NVarChar, req.body.first_name)
         .input("last_name", sql.NVarChar, req.body.last_name)
         .input("street_address", sql.NVarChar, req.body.street_address)
@@ -109,7 +111,9 @@ const FATSDB = {
         .query(
           ` 
             INSERT INTO [dbo].[members]
-                       ([first_name]
+                       ([email]
+                        ,[password]
+                        ,[first_name] 
                         ,[last_name]
                         ,[street_address]
                         ,[barangay]
@@ -125,7 +129,9 @@ const FATSDB = {
                                ,[club_secretry_NO]
                         )
                  VALUES
-                       (@first_name
+                       (@email
+                        ,password
+                        ,@first_name
                         ,@last_name
                         ,@street_address
                         ,@barangay
