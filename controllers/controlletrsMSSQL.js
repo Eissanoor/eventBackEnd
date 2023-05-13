@@ -30,7 +30,7 @@ const FATSDB = {
       const result = await pool
         .request()
         .query(
-          `SELECT * FROM users WHERE email='${email}' AND password='${password}'`
+          `SELECT * FROM members WHERE email='${email}' AND password='${password}'`
         );
 
       if (result.recordset.length > 0) {
@@ -39,7 +39,7 @@ const FATSDB = {
         let data = await pool
           .request()
           .input("email", sql.NVarChar, email)
-          .query(`select * from users where email=@email`);
+          .query(`select * from members where email=@email`);
 
         if (data.rowsAffected[0] != 0) {
           let listdata = data.recordsets[0];
