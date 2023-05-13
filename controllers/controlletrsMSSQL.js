@@ -65,7 +65,7 @@ const FATSDB = {
             .status(500)
             .send({ success: false, message: "Token not generated" });
         // return res.cookie("token", token, {
-        //   // httpOnly: true,
+        //   // httpOnly: true,//
         // }).
         res
           .status(200)
