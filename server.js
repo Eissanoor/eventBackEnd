@@ -9,7 +9,7 @@ const corsOptions = {
   origin: ["http://localhost:3015", "http://161.97.172.46:3000"],
   credentials: true,
 };
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(cookieParser());
 // app.use("/uploads", express.static(__dirname + "/uploads"));
 // serve static files from the uploads directory
