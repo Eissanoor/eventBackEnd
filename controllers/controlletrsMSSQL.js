@@ -20,6 +20,9 @@ function generateUpdateQuery(fields, tableName) {
 
   return `UPDATE ${tableName} SET ${updateFields}`;
 }
+let date = new Date();
+let alldate = date.toLocaleString();
+console.log(alldate);
 const FATSDB = {
   async UserLoginAuth(req, res, next) {
     try {
@@ -241,6 +244,100 @@ const FATSDB = {
       return res.status(500).send(e);
     }
   },
+
+  async tblPostEvent(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      var today = new Date();
+      var date = today.toLocaleString();
+      let data = await pool
+        .request()
+        .input("event_name", sql.NVarChar, req.body.event_name)
+        .input("event_description", sql.NVarChar, req.body.event_description)
+        .input("location", sql.NVarChar, req.body.location)
+        .input("location_area", sql.NVarChar, req.body.location_area)
+        .input("status", sql.NVarChar, "Pending")
+        .input("start_date", sql.NVarChar, req.body.start_date)
+        .input("created_at", sql.NVarChar, date)
+
+        .query(
+          ` 
+            INSERT INTO [dbo].[events]
+                       ([event_name] 
+                        ,[event_description]
+                        ,[location] 
+                        ,[location_area]
+                        ,[status]
+                        ,[start_date]
+                         ,[created_at]
+                        )
+                 VALUES
+                       (@event_name
+                        ,@event_description
+                        ,@location
+                        ,@location_area
+                        ,@status
+                        ,@start_date
+                        ,@created_at
+                             
+                       )
+                    
+
+                       SELECT SCOPE_IDENTITY() AS id
+                       
+                       
+            `
+        );
+      //
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  async tblUpdateEvent(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const id = req.params.id;
+      var today = new Date();
+      var date = today.toLocaleString();
+
+      let data = await pool
+        .request()
+
+        .input("event_name", sql.NVarChar, req.body.event_name)
+        .input("event_description", sql.NVarChar, req.body.event_description)
+        .input("location", sql.NVarChar, req.body.location)
+        .input("location_area", sql.NVarChar, req.body.location_area)
+
+        .input("updated_at", sql.DateTime, date).query(`
+
+    
+   UPDATE [dbo].[events]
+SET
+[event_name] =@event_name
+,[event_description] =@event_description
+,[location] =@location
+,[location_area] =@location_area
+,[updated_at] =@updated_at
+
+ 
+ 
+
+
+
+  
+  
+WHERE id=${id}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+
   //
   ////
 };
