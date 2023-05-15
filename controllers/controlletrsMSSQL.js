@@ -337,7 +337,20 @@ WHERE id=${id}`);
       return res.status(500).send(e);
     }
   },
-
+  async getEentById(req, res, next) {
+    try {
+      const id = req.params.id;
+      let pool = await sql.connect(config);
+      let data = await pool
+        .request()
+        .query(`select * from events where id=${id}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //
   ////
 };

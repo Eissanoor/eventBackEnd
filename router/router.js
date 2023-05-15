@@ -22,6 +22,7 @@ router.get(
   "/getMembersEmail_Password/:email/:password",
   FATSDB.getMembersEmail_Password
 );
+router.get("/getEentById/:id", FATSDB.getEentById);
 router.get("/getEventAll", FATSDB.getEventAll);
 router.post("/tblPostEvent", FATSDB.tblPostEvent);
 router.put("/tblUpdateEvent/:id", FATSDB.tblUpdateEvent);
