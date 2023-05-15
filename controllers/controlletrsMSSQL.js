@@ -311,7 +311,7 @@ const FATSDB = {
         .input("location", sql.NVarChar, req.body.location)
         .input("location_area", sql.NVarChar, req.body.location_area)
 
-        .input("updated_at", sql.DateTime, date).query(`
+        .input("updated_at", sql.NVarChar, date).query(`
 
     
    UPDATE [dbo].[events]
