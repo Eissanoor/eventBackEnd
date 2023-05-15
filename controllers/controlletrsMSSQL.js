@@ -229,6 +229,18 @@ const FATSDB = {
       return res.status(500).json(e);
     }
   },
+  async getEventAll(req, res, next) {
+    try {
+      const memberID = req.params.memberID;
+      let pool = await sql.connect(config);
+      let data = await pool.request().query(`select * from events`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //
   ////
 };

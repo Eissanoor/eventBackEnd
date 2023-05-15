@@ -22,4 +22,5 @@ router.get(
   "/getMembersEmail_Password/:email/:password",
   FATSDB.getMembersEmail_Password
 );
+router.get("/getEventAll", FATSDB.getEventAll);
 export default router;
