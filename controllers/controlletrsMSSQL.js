@@ -351,6 +351,21 @@ WHERE id=${id}`);
       return res.status(500).send(e);
     }
   },
+  async deleteEventById(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const id = req.params.id;
+      let data = await pool
+        .request()
+
+        .query(`delete from events where id=${id}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //
   ////
 };
