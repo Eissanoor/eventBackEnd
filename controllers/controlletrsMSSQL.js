@@ -108,9 +108,10 @@ const FATSDB = {
         .input("national_president", sql.NVarChar, req.body.national_president)
         .input("date", sql.NVarChar, req.body.date)
         .input("pe_ID", sql.NVarChar, req.body.pe_ID)
+
         .input("club_secretry_name", sql.NVarChar, req.body.club_secretry_name)
         .input("club_secretry_NO", sql.NVarChar, req.body.club_secretry_NO)
-
+        .input("status", sql.NVarChar, "InActive")
         .query(
           ` 
             INSERT INTO [dbo].[members]
@@ -121,6 +122,7 @@ const FATSDB = {
                         ,[street_address]
                         ,[barangay]
                         ,[province]
+                         
                         ,[city]
                          ,[club_name]
                           ,[club_region]
@@ -130,6 +132,7 @@ const FATSDB = {
                              ,[pe_ID]
                               ,[club_secretry_name]
                                ,[club_secretry_NO]
+                               ,[status]
                         )
                  VALUES
                        (@email
@@ -148,6 +151,7 @@ const FATSDB = {
                              ,@pe_ID
                              ,@club_secretry_name
                              ,@club_secretry_NO 
+                             ,@status 
                              
                        )
                     
@@ -359,6 +363,39 @@ WHERE id=${id}`);
         .request()
 
         .query(`delete from events where id=${id}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  async tblApprovalUser(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const memberID = req.params.memberID;
+      var today = new Date();
+      var date = today.toLocaleString();
+
+      let data = await pool
+        .request()
+
+        .input("status", sql.NVarChar, "Active").query(`
+
+    
+   UPDATE [dbo].[members]
+SET
+[status] =@status
+
+
+ 
+ 
+
+
+
+  
+  
+WHERE memberID=${memberID}`);
       console.log(data);
       return res.send(data);
     } catch (e) {

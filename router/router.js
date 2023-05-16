@@ -27,4 +27,5 @@ router.get("/getEventAll", FATSDB.getEventAll);
 router.post("/tblPostEvent", FATSDB.tblPostEvent);
 router.put("/tblUpdateEvent/:id", FATSDB.tblUpdateEvent);
 router.delete("/deleteEventById/:id", FATSDB.deleteEventById);
+router.put("/tblApprovalUser/:memberID", FATSDB.tblApprovalUser);
 export default router;
