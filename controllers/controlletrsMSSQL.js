@@ -123,8 +123,8 @@ const FATSDB = {
         .input("status", sql.NVarChar, "InActive")
         .input("governmentIDImage", sql.NVarChar, url)
         .input("selfieIDImage", sql.NVarChar, url2)
-        .input("lattitiude", sql.Numeric, req.body.lattitiude)
-        .input("longitude", sql.Numeric, req.body.longitude)
+        .input("lattitiude", sql.VarChar, req.body.lattitiude)
+        .input("longitude", sql.VarChar, req.body.longitude)
         .query(
           ` 
             INSERT INTO [dbo].[members]
