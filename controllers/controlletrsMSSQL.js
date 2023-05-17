@@ -13,6 +13,7 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 let jwtSecret = process.env.JWT_SECRET;
 let jwtExpiration = process.env.JWT_EXPIRATION;
 //get all data
+
 function generateUpdateQuery(fields, tableName) {
   const updateFields = Object.keys(fields)
     .map((key) => `${key}=@${key}`)
@@ -87,6 +88,14 @@ const FATSDB = {
   },
   async tblPostMembers(req, res, next) {
     try {
+      const file = req.files["governmentIDImage"][0];
+
+      const url = `http://gs1ksa.org:3015/api/profile/${file.filename}`;
+      const iD = req.files["selfieIDImage"][0];
+
+      const url2 = `http://gs1ksa.org:3015/api/profile/${iD.filename}`;
+      console.log(url2);
+      console.log(url);
       let qdate = new Date();
 
       let pool = await sql.connect(config);
@@ -112,6 +121,8 @@ const FATSDB = {
         .input("club_secretry_name", sql.NVarChar, req.body.club_secretry_name)
         .input("club_secretry_NO", sql.NVarChar, req.body.club_secretry_NO)
         .input("status", sql.NVarChar, "InActive")
+        .input("governmentIDImage", sql.NVarChar, url)
+        .input("selfieIDImage", sql.NVarChar, url2)
         .query(
           ` 
             INSERT INTO [dbo].[members]
@@ -133,6 +144,8 @@ const FATSDB = {
                               ,[club_secretry_name]
                                ,[club_secretry_NO]
                                ,[status]
+                                 ,[governmentIDImage]
+                                 ,[selfieIDImage]
                         )
                  VALUES
                        (@email
@@ -152,7 +165,8 @@ const FATSDB = {
                              ,@club_secretry_name
                              ,@club_secretry_NO 
                              ,@status 
-                             
+                             ,@governmentIDImage 
+                             ,@selfieIDImage
                        )
                     
 
@@ -387,14 +401,6 @@ WHERE id=${id}`);
 SET
 [status] =@status
 
-
- 
- 
-
-
-
-  
-  
 WHERE memberID=${memberID}`);
       console.log(data);
       return res.send(data);
@@ -403,6 +409,7 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
+
   //
   ////
 };

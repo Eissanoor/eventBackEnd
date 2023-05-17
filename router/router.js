@@ -1,4 +1,5 @@
 import express from "express";
+import multer from "multer";
 import upload from "../config/multerConfig.js";
 
 const router = express.Router();
@@ -12,8 +13,28 @@ import {
   generateToken,
 } from "../helpers/apiAuth.js";
 import logoUpload from "../config/multerLogoConfig.js";
+
+const storage = multer.diskStorage({
+  destination: "../uploads",
+  filename: function (req, file, cb) {
+    return cb(
+      null,
+      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
+    );
+  },
+});
+var uploadee = multer({
+  storage: storage,
+  limits: { fileSize: 1000000000000000000000 },
+});
+const cpUpload = upload.fields([
+  { name: "governmentIDImage" },
+  { name: "selfieIDImage" },
+]);
+
+router.use("/profile", express.static("uploads"));
 router.post("/UserLoginAuth", FATSDB.UserLoginAuth);
-router.post("/tblPostMembers", FATSDB.tblPostMembers);
+router.post("/tblPostMembers", cpUpload, FATSDB.tblPostMembers);
 router.get("/getMembersById/:memberID", FATSDB.getMembersById);
 router.get("/getMembersAll", FATSDB.getMembersAll);
 router.get("/ListOfDropDownCities", FATSDB.ListOfDropDownCities);
@@ -28,4 +49,7 @@ router.post("/tblPostEvent", FATSDB.tblPostEvent);
 router.put("/tblUpdateEvent/:id", FATSDB.tblUpdateEvent);
 router.delete("/deleteEventById/:id", FATSDB.deleteEventById);
 router.put("/tblApprovalUser/:memberID", FATSDB.tblApprovalUser);
+
+//------------------------------------
+
 export default router;
