@@ -88,9 +88,9 @@ const FATSDB = {
   },
   async tblPostMembers(req, res, next) {
     try {
-      const file = req.files["governmentIDImage"][0];
+      const file = req.files["governmentIDImage"];
 
-      const url = `http://gs1ksa.org:3015/api/profile/${file.filename}`;
+      const url = `http://gs1ksa.org:3015/api/profile/${file[0].filename}`;
       const iD = req.files["selfieIDImage"][0];
 
       const url2 = `http://gs1ksa.org:3015/api/profile/${iD.filename}`;
