@@ -115,7 +115,7 @@ const FATSDB = {
         .input("club_region", sql.NVarChar, req.body.club_region)
         .input("club_president", sql.NVarChar, req.body.club_president)
         .input("national_president", sql.NVarChar, req.body.national_president)
-        .input("date", sql.NVarChar, req.body.date)
+        .input("date", sql.DateTime, req.body.date)
         .input("pe_ID", sql.NVarChar, req.body.pe_ID)
 
         .input("club_secretry_name", sql.NVarChar, req.body.club_secretry_name)
@@ -424,6 +424,59 @@ WHERE memberID=${memberID}`);
         .query(`SELECT lattitiude,longitude FROM members`);
       console.log(data);
       return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  async tblUpdateProfileIMAG(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const memberID = req.params.memberID;
+
+      const file = req.files["selfieIDImage"];
+
+      const url = `http://gs1ksa.org:3015/api/profile/${file[0].filename}`;
+      let data = await pool
+        .request()
+
+        .input("selfieIDImage", sql.NVarChar, url).query(`
+
+    
+   UPDATE [dbo].[members]
+SET
+[selfieIDImage] =@selfieIDImage
+
+
+ 
+ 
+
+
+
+  
+  
+WHERE memberID=${memberID}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+
+  //--------------practice-----------------------
+  async listOfSevenDayPateints(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      let data = await pool
+        .request()
+        .query(
+          `select * from members where date BETWEEN DATEADD(day, -1, GETDATE()) AND DATEADD(day, -0, GETDATE())`
+        );
+      if (data.rowsAffected[0] == 0) return res.status(200).json(0);
+      let listdata = data.recordsets[0];
+      console.log(listdata);
+      return res.send(listdata);
     } catch (e) {
       console.log(e);
       return res.status(500).send(e);

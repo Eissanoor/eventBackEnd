@@ -50,4 +50,10 @@ router.put("/tblUpdateEvent/:id", FATSDB.tblUpdateEvent);
 router.delete("/deleteEventById/:id", FATSDB.deleteEventById);
 router.put("/tblApprovalUser/:memberID", FATSDB.tblApprovalUser);
 router.get("/ListOFAllLocation", FATSDB.ListOFAllLocation);
+router.get("/listOfSevenDayPateints", FATSDB.listOfSevenDayPateints);
+router.put(
+  "/tblUpdateProfileIMAG/:memberID",
+  cpUpload,
+  FATSDB.tblUpdateProfileIMAG
+);
 export default router;
