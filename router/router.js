@@ -57,4 +57,5 @@ router.put(
   FATSDB.tblUpdateProfileIMAG
 );
 router.put("/tblUpdateMembers/:memberID", FATSDB.tblUpdateMembers);
+router.delete("/deleteMembersById/:memberID", FATSDB.deleteMembersById);
 export default router;

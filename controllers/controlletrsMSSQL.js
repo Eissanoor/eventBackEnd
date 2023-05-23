@@ -525,6 +525,21 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
+  async deleteMembersById(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const memberID = req.params.memberID;
+      let data = await pool
+        .request()
+
+        .query(`delete from members where memberID=${memberID}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //--------------practice-----------------------
   async listOfSevenDayPateints(req, res, next) {
     try {
