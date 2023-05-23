@@ -56,4 +56,5 @@ router.put(
   cpUpload,
   FATSDB.tblUpdateProfileIMAG
 );
+router.put("/tblUpdateMembers/:memberID", FATSDB.tblUpdateMembers);
 export default router;
