@@ -474,7 +474,7 @@ WHERE memberID=${memberID}`);
         .request()
         .input("first_name", sql.NVarChar, req.body.first_name)
         .input("last_name", sql.NVarChar, req.body.last_name)
-        .input("street_address", sql.NVarChar, req.body.street_address)
+
         .input("barangay", sql.NVarChar, req.body.barangay)
         .input("province", sql.NVarChar, req.body.province)
         .input("city", sql.NVarChar, req.body.city)
@@ -483,8 +483,6 @@ WHERE memberID=${memberID}`);
         .input("club_region", sql.NVarChar, req.body.club_region)
         .input("club_president", sql.NVarChar, req.body.club_president)
         .input("national_president", sql.NVarChar, req.body.national_president)
-
-        .input("pe_ID", sql.NVarChar, req.body.pe_ID)
 
         .input("club_secretry_name", sql.NVarChar, req.body.club_secretry_name)
         .input("club_secretry_NO", sql.NVarChar, req.body.club_secretry_NO)
@@ -495,7 +493,7 @@ WHERE memberID=${memberID}`);
 SET
 [first_name] =@first_name
 ,[last_name] =@last_name
-,[street_address] =@street_address
+
 ,[barangay] =@barangay
 
 ,[province] =@province
@@ -504,7 +502,7 @@ SET
 ,[club_region] =@club_region
 ,[club_president] =@club_president
 ,[national_president] =@national_president
-,[pe_ID] =@pe_ID
+
 
 ,[club_secretry_name] =@club_secretry_name
 ,[club_secretry_NO] =@club_secretry_NO
