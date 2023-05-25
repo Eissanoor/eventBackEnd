@@ -120,7 +120,7 @@ const FATSDB = {
 
         .input("club_secretry_name", sql.NVarChar, req.body.club_secretry_name)
         .input("club_secretry_NO", sql.NVarChar, req.body.club_secretry_NO)
-        .input("status", sql.NVarChar, "InActive")
+        .input("status", sql.NVarChar, "Pending For Approval")
         .input("governmentIDImage", sql.NVarChar, url)
         .input("selfieIDImage", sql.NVarChar, url2)
         .input("lattitiude", sql.VarChar, req.body.lattitiude)
@@ -401,6 +401,31 @@ WHERE id=${id}`);
         .request()
 
         .input("status", sql.NVarChar, "Active").query(`
+
+    
+   UPDATE [dbo].[members]
+SET
+[status] =@status
+
+WHERE memberID=${memberID}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  async tblInActiveUser(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const memberID = req.params.memberID;
+      var today = new Date();
+      var date = today.toLocaleString();
+
+      let data = await pool
+        .request()
+
+        .input("status", sql.NVarChar, "InActive").query(`
 
     
    UPDATE [dbo].[members]
