@@ -359,6 +359,56 @@ WHERE id=${id}`);
       return res.status(500).send(e);
     }
   },
+  async tblUpdateEventstatusInactive(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const id = req.params.id;
+
+      let data = await pool
+        .request()
+
+        .input("status", sql.NVarChar, "InActive").query(`
+
+    
+   UPDATE [dbo].[events]
+SET
+[status] =@status
+
+
+  
+WHERE id=${id}`);
+
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  async tblUpdateEventstatusActive(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const id = req.params.id;
+
+      let data = await pool
+        .request()
+
+        .input("status", sql.NVarChar, "Active").query(`
+
+    
+   UPDATE [dbo].[events]
+SET
+[status] =@status
+
+
+  
+WHERE id=${id}`);
+
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   async getEentById(req, res, next) {
     try {
       const id = req.params.id;

@@ -59,4 +59,12 @@ router.put(
 router.put("/tblUpdateMembers/:memberID", FATSDB.tblUpdateMembers);
 router.delete("/deleteMembersById/:memberID", FATSDB.deleteMembersById);
 router.put("/tblInActiveUser/:memberID", FATSDB.tblInActiveUser);
+router.put(
+  "/tblUpdateEventstatusInactive/:id",
+  FATSDB.tblUpdateEventstatusInactive
+);
+router.put(
+  "/tblUpdateEventstatusActive/:id",
+  FATSDB.tblUpdateEventstatusActive
+);
 export default router;
