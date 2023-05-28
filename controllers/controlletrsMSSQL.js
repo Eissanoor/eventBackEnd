@@ -273,7 +273,6 @@ const FATSDB = {
     try {
       let pool = await sql.connect(config);
       var today = new Date();
-      var date = today.toLocaleString();
       let data = await pool
         .request()
         .input("event_name", sql.NVarChar, req.body.event_name)
@@ -281,8 +280,8 @@ const FATSDB = {
         .input("location", sql.NVarChar, req.body.location)
         .input("location_area", sql.NVarChar, req.body.location_area)
         .input("status", sql.NVarChar, "Pending")
-        .input("start_date", sql.NVarChar, req.body.start_date)
-        .input("created_at", sql.NVarChar, date)
+        .input("start_date", sql.DateTime, req.body.start_date)
+        .input("created_at", sql.DateTime, today)
 
         .query(
           ` 
@@ -325,7 +324,6 @@ const FATSDB = {
       let pool = await sql.connect(config);
       const id = req.params.id;
       var today = new Date();
-      var date = today.toLocaleString();
 
       let data = await pool
         .request()
@@ -335,7 +333,7 @@ const FATSDB = {
         .input("location", sql.NVarChar, req.body.location)
         .input("location_area", sql.NVarChar, req.body.location_area)
 
-        .input("updated_at", sql.NVarChar, date).query(`
+        .input("updated_at", sql.DateTime, today).query(`
 
     
    UPDATE [dbo].[events]
