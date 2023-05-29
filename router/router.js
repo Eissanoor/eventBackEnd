@@ -68,7 +68,7 @@ router.put(
   FATSDB.tblUpdateEventstatusActive
 );
 router.get(
-  "/ListOfDropDownWithIDCities/:tblCitiesID",
+  "/ListOfDropDownWithIDCities/:provanceID",
   FATSDB.ListOfDropDownWithIDCities
 );
 router.get(

@@ -632,11 +632,11 @@ WHERE memberID=${memberID}`);
 
   async ListOfDropDownWithIDCities(req, res, next) {
     try {
-      const tblCitiesID = req.params.tblCitiesID;
+      const provanceID = req.params.provanceID;
       let pool = await sql.connect(config);
       let data = await pool
         .request()
-        .query(`select * from tblCities where tblCitiesID = ${tblCitiesID}`);
+        .query(`select * from tblCities where provanceID = ${provanceID}`);
       console.log(data);
       return res.json(data);
     } catch (e) {
