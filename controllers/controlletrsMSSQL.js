@@ -629,6 +629,31 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
+
+  async ListOfDropDownWithIDCities(req, res, next) {
+    try {
+      const memberID = req.params.memberID;
+      let pool = await sql.connect(config);
+      let data = await pool.request().query(`select * from tblCities`);
+      console.log(data);
+      return res.json(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json(e);
+    }
+  },
+  async ListOfDropDownWithIDProvince(req, res, next) {
+    try {
+      const memberID = req.params.memberID;
+      let pool = await sql.connect(config);
+      let data = await pool.request().query(`select * from tbl_province`);
+      console.log(data);
+      return res.json(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json(e);
+    }
+  },
   //
   ////
 };

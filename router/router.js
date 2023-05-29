@@ -67,4 +67,9 @@ router.put(
   "/tblUpdateEventstatusActive/:id",
   FATSDB.tblUpdateEventstatusActive
 );
+router.get("/ListOfDropDownWithIDCities", FATSDB.ListOfDropDownWithIDCities);
+router.get(
+  "/ListOfDropDownWithIDProvince",
+  FATSDB.ListOfDropDownWithIDProvince
+);
 export default router;
