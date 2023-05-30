@@ -656,6 +656,21 @@ WHERE memberID=${memberID}`);
       return res.status(500).json(e);
     }
   },
+  async deleteProvanceById(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const provinceID = req.params.provinceID;
+      let data = await pool
+        .request()
+
+        .query(`delete from tbl_province where provinceID=${provinceID}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //
   ////
 };

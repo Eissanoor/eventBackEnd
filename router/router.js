@@ -75,4 +75,5 @@ router.get(
   "/ListOfDropDownWithIDProvince",
   FATSDB.ListOfDropDownWithIDProvince
 );
+router.delete("/deleteProvanceById/:provinceID", FATSDB.deleteProvanceById);
 export default router;
