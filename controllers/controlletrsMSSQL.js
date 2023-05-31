@@ -123,6 +123,7 @@ const FATSDB = {
         .input("selfieIDImage", sql.NVarChar, url2)
         .input("lattitiude", sql.VarChar, req.body.lattitiude)
         .input("longitude", sql.VarChar, req.body.longitude)
+        .input("Suffix", sql.NVarChar, req.body.Suffix)
         .query(
           ` 
             INSERT INTO [dbo].[members]
@@ -147,6 +148,7 @@ const FATSDB = {
                                  ,[selfieIDImage]
                                   ,[lattitiude]
                                    ,[longitude]
+                                   ,[Suffix]
                         )
                  VALUES
                        (@email
@@ -160,7 +162,7 @@ const FATSDB = {
                          ,@club_name
                           ,@club_region 
                            ,@club_president
-                         
+                       
                             ,@date
                              ,@pe_ID
                             
@@ -169,6 +171,7 @@ const FATSDB = {
                              ,@selfieIDImage
                              ,@lattitiude
                              ,@longitude
+                               ,@Suffix
                        )
                     
 
