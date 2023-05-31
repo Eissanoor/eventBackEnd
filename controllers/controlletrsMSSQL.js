@@ -765,6 +765,21 @@ WHERE deskID=${deskID}`
       return res.status(500).send(e);
     }
   },
+  async deleteHelp_desk_ById(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const deskID = req.params.deskID;
+      let data = await pool
+        .request()
+
+        .query(`delete from help_desk where deskID=${deskID}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //--------------practice-----------------------
   async listOfSevenDayPateints(req, res, next) {
     try {
