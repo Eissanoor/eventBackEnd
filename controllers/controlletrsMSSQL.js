@@ -610,25 +610,6 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
-  //--------------practice-----------------------
-  async listOfSevenDayPateints(req, res, next) {
-    try {
-      let pool = await sql.connect(config);
-      let data = await pool
-        .request()
-        .query(
-          `select * from members where date BETWEEN DATEADD(day, -1, GETDATE()) AND DATEADD(day, -0, GETDATE())`
-        );
-      if (data.rowsAffected[0] == 0) return res.status(200).json(0);
-      let listdata = data.recordsets[0];
-      console.log(listdata);
-      return res.send(listdata);
-    } catch (e) {
-      console.log(e);
-      return res.status(500).send(e);
-    }
-  },
-
   async ListOfDropDownWithIDCities(req, res, next) {
     try {
       const provanceID = req.params.provanceID;
@@ -670,6 +651,73 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
+
+  async tbl_post_help_desk(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+
+      let data = await pool
+        .request()
+        .input("first_name", sql.NVarChar, req.body.first_name)
+        .input("last_name", sql.NVarChar, req.body.last_name)
+        .input("email", sql.NVarChar, req.body.email)
+        .input("issue", sql.NVarChar, req.body.issue)
+        .input("detail", sql.NVarChar, req.body.detail)
+
+        .query(
+          ` 
+            INSERT INTO [dbo].[help_desk]
+                       ([first_name] 
+                        ,[last_name]
+                        ,[email] 
+                        ,[issue]
+                
+                        ,[detail]
+                        
+                        )
+                 VALUES
+                       (@first_name
+                        ,@last_name
+                        ,@email
+                        ,@issue
+          
+                        ,@detail
+                             
+                       )
+                    
+
+                       SELECT SCOPE_IDENTITY() AS deskID
+                       
+                       
+            `
+        );
+      //
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  //--------------practice-----------------------
+  async listOfSevenDayPateints(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      let data = await pool
+        .request()
+        .query(
+          `select * from members where date BETWEEN DATEADD(day, -1, GETDATE()) AND DATEADD(day, -0, GETDATE())`
+        );
+      if (data.rowsAffected[0] == 0) return res.status(200).json(0);
+      let listdata = data.recordsets[0];
+      console.log(listdata);
+      return res.send(listdata);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+
   //
   ////
 };
