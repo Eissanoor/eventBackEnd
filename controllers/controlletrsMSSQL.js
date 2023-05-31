@@ -726,6 +726,45 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
+  async tblUpdateHelp_desk(req, res, next) {
+    try {
+      let pool = await sql.connect(config);
+      const deskID = req.params.deskID;
+
+      let data = await pool
+        .request()
+        .input("first_name", sql.NVarChar, req.body.first_name)
+        .input("last_name", sql.NVarChar, req.body.last_name)
+        .input("email", sql.NVarChar, req.body.email)
+        .input("issue", sql.NVarChar, req.body.issue)
+        .input("detail", sql.NVarChar, req.body.detail)
+
+        .query(
+          ` 
+          UPDATE [dbo].[help_desk]
+SET
+[first_name] =@first_name
+,[last_name] =@last_name
+,[email] =@email
+,[issue] =@issue
+,[detail] =@detail
+
+ 
+ 
+
+
+
+  
+  
+WHERE deskID=${deskID}`
+        );
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //--------------practice-----------------------
   async listOfSevenDayPateints(req, res, next) {
     try {

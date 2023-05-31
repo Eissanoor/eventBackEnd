@@ -79,4 +79,5 @@ router.delete("/deleteProvanceById/:provinceID", FATSDB.deleteProvanceById);
 router.post("/tbl_post_help_desk", FATSDB.tbl_post_help_desk);
 router.get("/get_post_help_desk", FATSDB.get_post_help_desk);
 router.get("/get_post_help_deskById/:deskID", FATSDB.get_post_help_deskById);
+router.put("/tblUpdateHelp_desk/:deskID", FATSDB.tblUpdateHelp_desk);
 export default router;
