@@ -655,7 +655,7 @@ WHERE memberID=${memberID}`);
   async tbl_post_help_desk(req, res, next) {
     try {
       let pool = await sql.connect(config);
-
+      var val = Math.floor(100000 + Math.random() * 9000);
       let data = await pool
         .request()
         .input("first_name", sql.NVarChar, req.body.first_name)
@@ -663,7 +663,7 @@ WHERE memberID=${memberID}`);
         .input("email", sql.NVarChar, req.body.email)
         .input("issue", sql.NVarChar, req.body.issue)
         .input("detail", sql.NVarChar, req.body.detail)
-
+        .input("ticket_no", sql.Numeric, val)
         .query(
           ` 
             INSERT INTO [dbo].[help_desk]
@@ -673,6 +673,7 @@ WHERE memberID=${memberID}`);
                         ,[issue]
                 
                         ,[detail]
+                        ,[ticket_no]
                         
                         )
                  VALUES
@@ -682,7 +683,7 @@ WHERE memberID=${memberID}`);
                         ,@issue
           
                         ,@detail
-                             
+                             ,@ticket_no  
                        )
                     
 
