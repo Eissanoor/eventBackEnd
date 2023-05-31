@@ -712,6 +712,20 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
+  async get_post_help_deskById(req, res, next) {
+    try {
+      const deskID = req.params.deskID;
+      let pool = await sql.connect(config);
+      let data = await pool
+        .request()
+        .query(`select * from help_desk where deskID=${deskID}`);
+      console.log(data);
+      return res.send(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
   //--------------practice-----------------------
   async listOfSevenDayPateints(req, res, next) {
     try {
