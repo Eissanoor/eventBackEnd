@@ -114,12 +114,10 @@ const FATSDB = {
 
         .input("club_region", sql.NVarChar, req.body.club_region)
         .input("club_president", sql.NVarChar, req.body.club_president)
-        .input("national_president", sql.NVarChar, req.body.national_president)
+
         .input("date", sql.DateTime, req.body.date)
         .input("pe_ID", sql.NVarChar, req.body.pe_ID)
 
-        .input("club_secretry_name", sql.NVarChar, req.body.club_secretry_name)
-        .input("club_secretry_NO", sql.NVarChar, req.body.club_secretry_NO)
         .input("status", sql.NVarChar, "Pending For Approval")
         .input("governmentIDImage", sql.NVarChar, url)
         .input("selfieIDImage", sql.NVarChar, url2)
@@ -140,11 +138,10 @@ const FATSDB = {
                          ,[club_name]
                           ,[club_region]
                           ,[club_president]
-                           ,[national_president]
+                        
                             ,[date]
                              ,[pe_ID]
-                              ,[club_secretry_name]
-                               ,[club_secretry_NO]
+                             
                                ,[status]
                                  ,[governmentIDImage]
                                  ,[selfieIDImage]
@@ -163,11 +160,10 @@ const FATSDB = {
                          ,@club_name
                           ,@club_region 
                            ,@club_president
-                           ,@national_president
+                         
                             ,@date
                              ,@pe_ID
-                             ,@club_secretry_name
-                             ,@club_secretry_NO 
+                            
                              ,@status 
                              ,@governmentIDImage 
                              ,@selfieIDImage
