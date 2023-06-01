@@ -1,12 +1,15 @@
 import express from "express";
 import multer from "multer";
 import upload from "../config/multerConfig.js";
-
+import sql from "mssql";
+import config from "../config/dbconfig.js";
+import nodemailer from "nodemailer";
 const router = express.Router();
 
 import FATSDBODBC from "../controllers/controllersODBC.js";
 //
 import FATSDB from "../controllers/controlletrsMSSQL.js";
+
 import {
   checkAuthentication,
   checkRole,
@@ -81,4 +84,122 @@ router.get("/get_post_help_desk", FATSDB.get_post_help_desk);
 router.get("/get_post_help_deskById/:deskID", FATSDB.get_post_help_deskById);
 router.put("/tblUpdateHelp_desk/:deskID", FATSDB.tblUpdateHelp_desk);
 router.delete("/deleteHelp_desk_ById/:deskID", FATSDB.deleteHelp_desk_ById);
+
+//---------------------------------------RESETPASSWORD----------------------------------
+const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
+  let pool = await sql.connect(config);
+  const email = req.body.email;
+  let data = await pool
+    .request()
+    .input("email", sql.NVarChar, req.body.email)
+    .query(`select * from members where email=@email`);
+  console.log(data);
+  if (data) {
+    var val = Math.floor(1000 + Math.random() * 9000);
+    console.log(val);
+
+    try {
+      let OTP = await pool
+        .request()
+        .input("email", sql.NVarChar, email)
+        .input("OTP_NO", sql.Numeric, val)
+
+        .query(
+          ` 
+            INSERT INTO [dbo].[otp]
+                       ([email] 
+                        ,[OTP_NO]
+                       
+                        )
+                 VALUES
+                       (@email
+                        ,@OTP_NO
+                      
+                             
+                       )
+                    
+
+                       SELECT SCOPE_IDENTITY() AS otpID
+                       
+                       
+            `
+        );
+      var transpoter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "eissaanoor@gmail.com",
+          pass: "asqgbvuvawbtjnqz",
+        },
+      });
+
+      var mailoption = {
+        from: "eissaanoor@gmail.com",
+        to: email,
+        subject: "sending email using nodejs",
+        text: `changePassword OTP ${val}`,
+      };
+      transpoter.sendMail(mailoption, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("email send " + info.response);
+        }
+      });
+      console.log(OTP);
+      res.status(200).send("THIS IS YOUR OTP " + val);
+      router.post("/varifyOtp", async (req, res) => {
+        const result = await pool
+          .request()
+          .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
+          .query(`SELECT * FROM otp WHERE email='${email}' AND OTP_NO=@OTP_NO`);
+        if (result.rowsAffected[0] == 0) {
+          res.json("CAN'T MATCH YOUR OTP CODE");
+        } else {
+          res.json("YOUR VARIFICATION OTP CODE successful");
+        }
+      });
+      router.post("/changePassword", async (req, res) => {
+        const result = await pool
+          .request()
+
+          .query(`SELECT * FROM members WHERE email='${email}'`);
+
+        console.log(result.recordset[0].password);
+        if (result.recordset[0].password) {
+          let OTP = await pool
+            .request()
+            .input("password", sql.NVarChar, req.body.password)
+
+            .query(
+              ` 
+            UPDATE [dbo].[members]
+SET
+[password] =@password
+
+
+ 
+ 
+
+
+
+  
+  
+WHERE email='${email}'
+                       
+                       
+            `
+            );
+          res.json("PASSWORD CHANGED");
+        } else {
+          res.json("PASSWORD NOT CHANGED");
+        }
+      });
+    } catch (error) {
+      console.log("OTP SAVE NADA SHIWEE", error);
+      res.json(error);
+    }
+  } else {
+  }
+});
+
 export default router;

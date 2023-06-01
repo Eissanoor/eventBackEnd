@@ -780,6 +780,7 @@ WHERE deskID=${deskID}`
       return res.status(500).send(e);
     }
   },
+
   //--------------practice-----------------------
   async listOfSevenDayPateints(req, res, next) {
     try {
@@ -798,8 +799,6 @@ WHERE deskID=${deskID}`
       return res.status(500).send(e);
     }
   },
-
-  //
-  ////
 };
+
 export default FATSDB;
