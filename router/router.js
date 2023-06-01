@@ -199,6 +199,7 @@ WHERE email='${email}'
       res.json(error);
     }
   } else {
+    res.json("This email cannot exist");
   }
 });
 
