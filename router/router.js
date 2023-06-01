@@ -150,13 +150,13 @@ router.post("/passwordchangeotpSend", async (req, res) => {
       let varimail = data.recordset[0].email;
       res.status(200).json({ OTP: `${val}` });
       console.log(varimail, "---------------------------------");
-      router.post("/varifyOtp", async (req, res) => {
+      router.post("/varifyOtp", (req, res) => {
         console.log(
           data.recordset[0].email,
           "---------------------------------"
         );
         const OTP_NO = req.body.OTP_NO;
-        const result = await pool
+        const result = pool
           .request()
           // .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
           .query(
@@ -171,16 +171,16 @@ router.post("/passwordchangeotpSend", async (req, res) => {
             .json({ message: "YOUR VARIFICATION OTP CODE successful" });
         }
       });
-      router.post("/changePassword", async (req, res) => {
+      router.post("/changePassword", (req, res) => {
         console.log(varimail, "---------------------------------");
-        const result = await pool
+        const result = pool
           .request()
 
           .query(`SELECT * FROM members WHERE email='${varimail}'`);
 
         console.log(result.recordset[0].password);
         if (result.recordset[0].password) {
-          let OTP = await pool
+          let OTP = pool
             .request()
             .input("password", sql.NVarChar, req.body.password)
 
