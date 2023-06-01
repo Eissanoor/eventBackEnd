@@ -86,7 +86,7 @@ router.put("/tblUpdateHelp_desk/:deskID", FATSDB.tblUpdateHelp_desk);
 router.delete("/deleteHelp_desk_ById/:deskID", FATSDB.deleteHelp_desk_ById);
 
 //---------------------------------------RESETPASSWORD----------------------------------
-const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
+router.post("/passwordchangeotpSend", async (req, res) => {
   let pool = await sql.connect(config);
   let email = req.body.email;
   let data = await pool
@@ -150,7 +150,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
       let varimail = data.recordset[0].email;
       res.status(200).json({ OTP: `${val}` });
       console.log(varimail, "---------------------------------");
-      const sendtp = router.post("/varifyOtp", async (req, res) => {
+      router.post("/varifyOtp", async (req, res) => {
         console.log(
           data.recordset[0].email,
           "---------------------------------"
@@ -171,7 +171,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
             .json({ message: "YOUR VARIFICATION OTP CODE successful" });
         }
       });
-      const sendot = router.post("/changePassword", async (req, res) => {
+      router.post("/changePassword", async (req, res) => {
         console.log(varimail, "---------------------------------");
         const result = await pool
           .request()
