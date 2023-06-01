@@ -146,16 +146,18 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
         }
       });
       console.log(OTP);
-      res.status(200).send("THIS IS YOUR OTP " + val);
+      res.status(200).json(`OTP:${val}`);
       router.post("/varifyOtp", async (req, res) => {
         const result = await pool
           .request()
           .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
           .query(`SELECT * FROM otp WHERE email='${email}' AND OTP_NO=@OTP_NO`);
         if (result.rowsAffected[0] == 0) {
-          res.json("INVALID OTP CODE");
+          res.status(404).json({ error: "INVALID OTP CODE" });
         } else {
-          res.json("YOUR VARIFICATION OTP CODE successful");
+          res
+            .status(200)
+            .json({ message: "YOUR VARIFICATION OTP CODE successful" });
         }
       });
       router.post("/changePassword", async (req, res) => {
@@ -189,9 +191,9 @@ WHERE email='${email}'
                        
             `
             );
-          res.json("PASSWORD CHANGED");
+          res.status(201).json({ message: "PASSWORD CHANGED" });
         } else {
-          res.json("PASSWORD NOT CHANGED");
+          res.status(404).json({ error: "PASSWORD NOT CHANGED" });
         }
       });
     } catch (error) {
