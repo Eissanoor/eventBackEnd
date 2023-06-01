@@ -146,7 +146,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
         }
       });
       console.log(OTP);
-      res.status(200).json(`OTP:${val}`);
+      res.status(200).json({ OTP: `${val}` });
       router.post("/varifyOtp", async (req, res) => {
         const result = await pool
           .request()
