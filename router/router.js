@@ -153,7 +153,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
           .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
           .query(`SELECT * FROM otp WHERE email='${email}' AND OTP_NO=@OTP_NO`);
         if (result.rowsAffected[0] == 0) {
-          res.json("CAN'T MATCH YOUR OTP CODE");
+          res.json("INVALID OTP CODE");
         } else {
           res.json("YOUR VARIFICATION OTP CODE successful");
         }
@@ -195,7 +195,7 @@ WHERE email='${email}'
         }
       });
     } catch (error) {
-      console.log("OTP SAVE NADA SHIWEE", error);
+      console.log("This email cannot exist", error);
       res.json(error);
     }
   } else {
