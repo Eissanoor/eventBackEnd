@@ -148,10 +148,13 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
       console.log(OTP);
       res.status(200).json({ OTP: `${val}` });
       router.post("/varifyOtp", async (req, res) => {
+        const OTP_NO = req.body.OTP_NO;
         const result = await pool
           .request()
-          .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
-          .query(`SELECT * FROM otp WHERE email='${email}' AND OTP_NO=@OTP_NO`);
+          // .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
+          .query(
+            `SELECT * FROM otp WHERE email='${email}' AND OTP_NO='${OTP_NO}'`
+          );
         if (result.rowsAffected[0] == 0) {
           res.status(404).json({ error: "INVALID OTP CODE" });
           console.log(result);
