@@ -149,9 +149,9 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
       console.log(data.recordset[0].email);
       const varimail = data.recordset[0].email;
       res.status(200).json({ OTP: `${val}` });
+      console.log(varimail, "---------------------------------");
       router.post("/varifyOtp", async (req, res) => {
         const OTP_NO = req.body.OTP_NO;
-        console.log(varimail, "---------------------------------");
         const result = await pool
           .request()
           // .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
