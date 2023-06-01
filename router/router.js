@@ -149,6 +149,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
       res.status(200).json({ OTP: `${val}` });
       router.post("/varifyOtp", async (req, res) => {
         const OTP_NO = req.body.OTP_NO;
+        console.log(email, "---------------------------------");
         const result = await pool
           .request()
           // .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
@@ -165,6 +166,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
         }
       });
       router.post("/changePassword", async (req, res) => {
+        console.log(email, "---------------------------------");
         const result = await pool
           .request()
 
