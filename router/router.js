@@ -86,7 +86,7 @@ router.put("/tblUpdateHelp_desk/:deskID", FATSDB.tblUpdateHelp_desk);
 router.delete("/deleteHelp_desk_ById/:deskID", FATSDB.deleteHelp_desk_ById);
 
 //---------------------------------------RESETPASSWORD----------------------------------
-router.post("/passwordchangeotpSend", async (req, res) => {
+const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
   let pool = await sql.connect(config);
   let email = req.body.email;
   let data = await pool
@@ -150,14 +150,15 @@ router.post("/passwordchangeotpSend", async (req, res) => {
       let varimail = data.recordset[0].email;
       res.status(200).json({ OTP: `${val}` });
       console.log(varimail, "---------------------------------");
-      router.post("/varifyOtp", (req, res) => {
+      const sendtp = router.post("/varifyOtp", async (req, res) => {
         console.log(varimail, "---------------------------------");
         const OTP_NO = req.body.OTP_NO;
-        const result = pool
+        const email = req.body.email;
+        const result = await pool
           .request()
           // .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
           .query(
-            `SELECT * FROM otp WHERE email='${varimail}' AND OTP_NO='${OTP_NO}'`
+            `SELECT * FROM otp WHERE email='${email}' AND OTP_NO='${OTP_NO}'`
           );
         if (result.rowsAffected[0] == 0) {
           res.status(404).json({ error: "INVALID OTP CODE" });
@@ -168,16 +169,16 @@ router.post("/passwordchangeotpSend", async (req, res) => {
             .json({ message: "YOUR VARIFICATION OTP CODE successful" });
         }
       });
-      router.post("/changePassword", (req, res) => {
-        console.log(varimail, "---------------------------------");
-        const result = pool
+      const sendot = router.post("/changePassword", async (req, res) => {
+        const email = req.body.email;
+        const result = await pool
           .request()
 
-          .query(`SELECT * FROM members WHERE email='${varimail}'`);
+          .query(`SELECT * FROM members WHERE email='${email}'`);
 
         console.log(result.recordset[0].password);
         if (result.recordset[0].password) {
-          let OTP = pool
+          let OTP = await pool
             .request()
             .input("password", sql.NVarChar, req.body.password)
 
