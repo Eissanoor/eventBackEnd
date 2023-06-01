@@ -154,6 +154,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
           .query(`SELECT * FROM otp WHERE email='${email}' AND OTP_NO=@OTP_NO`);
         if (result.rowsAffected[0] == 0) {
           res.status(404).json({ error: "INVALID OTP CODE" });
+          console.log(result);
         } else {
           res
             .status(200)
