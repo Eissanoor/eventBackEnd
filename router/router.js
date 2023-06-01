@@ -94,7 +94,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
     .input("email", sql.NVarChar, req.body.email)
     .query(`select * from members where email=@email`);
   console.log(data);
-  if (result.rowsAffected[0] == 1) {
+  if (data.rowsAffected[0] == 1) {
     var val = Math.floor(1000 + Math.random() * 9000);
     console.log(val);
 
