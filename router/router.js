@@ -88,7 +88,7 @@ router.delete("/deleteHelp_desk_ById/:deskID", FATSDB.deleteHelp_desk_ById);
 //---------------------------------------RESETPASSWORD----------------------------------
 const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
   let pool = await sql.connect(config);
-  const email = req.body.email;
+  let email = req.body.email;
   let data = await pool
     .request()
     .input("email", sql.NVarChar, req.body.email)
