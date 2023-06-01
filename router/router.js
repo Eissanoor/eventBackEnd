@@ -156,7 +156,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
           .request()
           // .input("OTP_NO", sql.Numeric, req.body.OTP_NO)
           .query(
-            `SELECT * FROM otp WHERE email='${email}' AND OTP_NO='${OTP_NO}'`
+            `SELECT * FROM otp WHERE email='${varimail}' AND OTP_NO='${OTP_NO}'`
           );
         if (result.rowsAffected[0] == 0) {
           res.status(404).json({ error: "INVALID OTP CODE" });
@@ -168,11 +168,11 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
         }
       });
       router.post("/changePassword", async (req, res) => {
-        console.log(email, "---------------------------------");
+        console.log(varimail, "---------------------------------");
         const result = await pool
           .request()
 
-          .query(`SELECT * FROM members WHERE email='${email}'`);
+          .query(`SELECT * FROM members WHERE email='${varimail}'`);
 
         console.log(result.recordset[0].password);
         if (result.recordset[0].password) {
@@ -194,7 +194,7 @@ SET
 
   
   
-WHERE email='${email}'
+WHERE email='${varimail}'
                        
                        
             `
