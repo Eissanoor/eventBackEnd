@@ -149,7 +149,8 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
       console.log(data.recordset[0].email);
       let varimail = data.recordset[0].email;
       res.status(200).json({ OTP: `${val}` });
-      router.post("/varifyOtp", async (req, res) => {
+      console.log(varimail, "---------------------------------");
+      const sendtp = router.post("/varifyOtp", async (req, res) => {
         console.log(varimail, "---------------------------------");
         const OTP_NO = req.body.OTP_NO;
         const result = await pool
@@ -167,7 +168,7 @@ const sendotp = router.post("/passwordchangeotpSend", async (req, res) => {
             .json({ message: "YOUR VARIFICATION OTP CODE successful" });
         }
       });
-      router.post("/changePassword", async (req, res) => {
+      const sendot = router.post("/changePassword", async (req, res) => {
         console.log(varimail, "---------------------------------");
         const result = await pool
           .request()
