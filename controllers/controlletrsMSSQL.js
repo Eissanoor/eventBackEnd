@@ -554,11 +554,7 @@ WHERE memberID=${memberID}`);
 
         .input("club_region", sql.NVarChar, req.body.club_region)
         .input("club_president", sql.NVarChar, req.body.club_president)
-        .input("national_president", sql.NVarChar, req.body.national_president)
-
-        .input("club_secretry_name", sql.NVarChar, req.body.club_secretry_name)
-        .input("club_secretry_NO", sql.NVarChar, req.body.club_secretry_NO)
-        .query(`
+        .input("Suffix", sql.NVarChar, req.body.Suffix).query(`
 
     
    UPDATE [dbo].[members]
@@ -573,11 +569,11 @@ SET
 ,[club_name] =@club_name
 ,[club_region] =@club_region
 ,[club_president] =@club_president
-,[national_president] =@national_president
+,[Suffix] =@Suffix
 
 
-,[club_secretry_name] =@club_secretry_name
-,[club_secretry_NO] =@club_secretry_NO
+
+
 
 
  
