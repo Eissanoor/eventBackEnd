@@ -585,7 +585,7 @@ SET
   
 WHERE memberID=${memberID}`);
       console.log(data);
-      return res.send(data);
+      return res.status(201).json(data);
     } catch (e) {
       console.log(e);
       return res.status(500).send(e);
