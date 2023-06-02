@@ -562,6 +562,8 @@ WHERE memberID=${memberID}`);
 
         .input("club_region", sql.NVarChar, req.body.club_region)
         .input("club_president", sql.NVarChar, req.body.club_president)
+        .input("date", sql.DateTime, today)
+        .input("pe_ID", sql.NVarChar, req.body.pe_ID)
         .input("governmentIDImage", sql.NVarChar, url)
         .input("selfieIDImage", sql.NVarChar, url2)
         .input("lattitiude", sql.VarChar, req.body.lattitiude)
@@ -587,6 +589,8 @@ SET
 ,[lattitiude] =@lattitiude
 ,[longitude] =@longitude
 ,[street_address] =@street_address
+,[date] =@date
+,[pe_ID] =@pe_ID
 
 
 
