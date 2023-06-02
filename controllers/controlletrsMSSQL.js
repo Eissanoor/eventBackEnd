@@ -538,6 +538,14 @@ WHERE memberID=${memberID}`);
   async tblUpdateMembers(req, res, next) {
     try {
       let pool = await sql.connect(config);
+      const file = req.files["governmentIDImage"];
+
+      const url = `http://gs1ksa.org:3015/api/profile/${file[0].filename}`;
+      const iD = req.files["selfieIDImage"][0];
+
+      const url2 = `http://gs1ksa.org:3015/api/profile/${iD.filename}`;
+      console.log(url2);
+      console.log(url);
       const memberID = req.params.memberID;
       var today = new Date();
       var date = today.toLocaleString();
@@ -546,7 +554,7 @@ WHERE memberID=${memberID}`);
         .request()
         .input("first_name", sql.NVarChar, req.body.first_name)
         .input("last_name", sql.NVarChar, req.body.last_name)
-
+        .input("street_address", sql.NVarChar, req.body.street_address)
         .input("barangay", sql.NVarChar, req.body.barangay)
         .input("province", sql.NVarChar, req.body.province)
         .input("city", sql.NVarChar, req.body.city)
@@ -554,6 +562,10 @@ WHERE memberID=${memberID}`);
 
         .input("club_region", sql.NVarChar, req.body.club_region)
         .input("club_president", sql.NVarChar, req.body.club_president)
+        .input("governmentIDImage", sql.NVarChar, url)
+        .input("selfieIDImage", sql.NVarChar, url2)
+        .input("lattitiude", sql.VarChar, req.body.lattitiude)
+        .input("longitude", sql.VarChar, req.body.longitude)
         .input("Suffix", sql.NVarChar, req.body.Suffix).query(`
 
     
@@ -570,6 +582,11 @@ SET
 ,[club_region] =@club_region
 ,[club_president] =@club_president
 ,[Suffix] =@Suffix
+,[governmentIDImage] =@governmentIDImage
+,[selfieIDImage] =@selfieIDImage
+,[lattitiude] =@lattitiude
+,[longitude] =@longitude
+,[street_address] =@street_address
 
 
 

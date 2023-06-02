@@ -59,7 +59,7 @@ router.put(
   cpUpload,
   FATSDB.tblUpdateProfileIMAG
 );
-router.put("/tblUpdateMembers/:memberID", FATSDB.tblUpdateMembers);
+router.put("/tblUpdateMembers/:memberID", cpUpload, FATSDB.tblUpdateMembers);
 router.delete("/deleteMembersById/:memberID", FATSDB.deleteMembersById);
 router.put("/tblInActiveUser/:memberID", FATSDB.tblInActiveUser);
 router.put(
