@@ -534,7 +534,7 @@ WHERE memberID=${memberID}`);
       console.log(e);
       return res.status(500).send(e);
     }
-  },
+  }, //
   async tblUpdateMembers(req, res, next) {
     try {
       let pool = await sql.connect(config);
