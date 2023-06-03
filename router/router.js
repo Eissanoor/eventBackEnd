@@ -70,12 +70,9 @@ router.put(
   "/tblUpdateEventstatusActive/:id",
   FATSDB.tblUpdateEventstatusActive
 );
+router.get("/ListOfDropDownWithIDCities", FATSDB.ListOfDropDownWithIDCities);
 router.get(
-  "/ListOfDropDownWithIDCities/:provanceID",
-  FATSDB.ListOfDropDownWithIDCities
-);
-router.get(
-  "/ListOfDropDownWithIDProvince",
+  "/ListOfDropDownWithIDProvince/:tblcitiesID",
   FATSDB.ListOfDropDownWithIDProvince
 );
 router.delete("/deleteProvanceById/:provinceID", FATSDB.deleteProvanceById);

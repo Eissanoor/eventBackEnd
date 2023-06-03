@@ -631,9 +631,7 @@ WHERE memberID=${memberID}`);
     try {
       const provanceID = req.params.provanceID;
       let pool = await sql.connect(config);
-      let data = await pool
-        .request()
-        .query(`select * from tblCities where provanceID = ${provanceID}`);
+      let data = await pool.request().query(`select * from tblCities`);
       console.log(data);
       return res.json(data);
     } catch (e) {
@@ -643,9 +641,11 @@ WHERE memberID=${memberID}`);
   },
   async ListOfDropDownWithIDProvince(req, res, next) {
     try {
-      const memberID = req.params.memberID;
+      const tblcitiesID = req.params.tblcitiesID;
       let pool = await sql.connect(config);
-      let data = await pool.request().query(`select * from tbl_province`);
+      let data = await pool
+        .request()
+        .query(`select * from tbl_province where tblcitiesID = ${tblcitiesID}`);
       console.log(data);
       return res.json(data);
     } catch (e) {
