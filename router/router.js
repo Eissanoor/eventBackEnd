@@ -75,6 +75,10 @@ router.get(
   "/ListOfDropDownWithIDProvince/:tblcitiesID",
   FATSDB.ListOfDropDownWithIDProvince
 );
+router.get(
+  "/ListOfDropDownWithIDbarangays/:tblcitiesID",
+  FATSDB.ListOfDropDownWithIDbarangays
+);
 router.delete("/deleteProvanceById/:provinceID", FATSDB.deleteProvanceById);
 router.post("/tbl_post_help_desk", FATSDB.tbl_post_help_desk);
 router.get("/get_post_help_desk", FATSDB.get_post_help_desk);

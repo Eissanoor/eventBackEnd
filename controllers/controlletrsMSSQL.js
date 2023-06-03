@@ -627,7 +627,7 @@ WHERE memberID=${memberID}`);
       return res.status(500).send(e);
     }
   },
-  async ListOfDropDownWithIDCities(req, res, next) {
+  async ListOfDropDownCities(req, res, next) {
     try {
       const provanceID = req.params.provanceID;
       let pool = await sql.connect(config);
@@ -646,6 +646,20 @@ WHERE memberID=${memberID}`);
       let data = await pool
         .request()
         .query(`select * from tbl_province where tblcitiesID = ${tblcitiesID}`);
+      console.log(data);
+      return res.json(data);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json(e);
+    }
+  },
+  async ListOfDropDownWithIDbarangays(req, res, next) {
+    try {
+      const tblcitiesID = req.params.tblcitiesID;
+      let pool = await sql.connect(config);
+      let data = await pool
+        .request()
+        .query(`select * from barangays where tblcitiesID = ${tblcitiesID}`);
       console.log(data);
       return res.json(data);
     } catch (e) {
